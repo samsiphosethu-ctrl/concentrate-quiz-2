@@ -1,0 +1,472 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Your Concentrate Style — Mood</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+.mq-shell {
+  background: #1B3A2F;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.mq-card {
+  background: #ffffff;
+  border-radius: 20px;
+  max-width: 460px;
+  width: 100%;
+  padding: 36px 32px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.22);
+}
+
+.mq-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7A9C8A;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.mq-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1B3A2F;
+  line-height: 1.25;
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+.mq-sub {
+  font-size: 14px;
+  color: #6B8278;
+  text-align: center;
+  margin: 0 0 28px;
+  line-height: 1.5;
+}
+
+.mq-icon {
+  font-size: 44px;
+  text-align: center;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.mq-progress-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9EB8AC;
+  text-align: right;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.mq-progress-track {
+  height: 3px;
+  background: #E4EDE8;
+  border-radius: 99px;
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+
+.mq-progress-fill {
+  height: 100%;
+  background: #1B3A2F;
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0%;
+}
+
+.mq-question {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1B3A2F;
+  line-height: 1.45;
+  text-align: center;
+  margin: 0 0 22px;
+}
+
+.mq-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mq-opt {
+  background: #F3F7F4;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1B3A2F;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.45;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  width: 100%;
+}
+
+.mq-opt:hover {
+  background: #E4EDE8;
+  border-color: #1B3A2F;
+  transform: translateY(-1px);
+}
+
+.mq-opt.mq-selected {
+  background: #1B3A2F;
+  color: #ffffff;
+  border-color: #1B3A2F;
+}
+
+.mq-start-btn {
+  display: block;
+  width: 100%;
+  background: #1B3A2F;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 17px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.12s ease;
+  letter-spacing: 0.01em;
+}
+
+.mq-start-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.mq-result-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 99px;
+  margin-bottom: 14px;
+}
+
+.mq-result-heading {
+  font-size: 23px;
+  font-weight: 800;
+  color: #1B3A2F;
+  margin: 0 0 10px;
+  line-height: 1.2;
+}
+
+.mq-result-desc {
+  font-size: 14px;
+  color: #4A6358;
+  line-height: 1.7;
+  margin: 0 0 20px;
+}
+
+.mq-result-facts {
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 22px;
+}
+
+.mq-fact-row {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: #1B3A2F;
+  margin-bottom: 8px;
+  align-items: flex-start;
+}
+
+.mq-fact-row:last-child { margin-bottom: 0; }
+
+.mq-fact-label {
+  font-weight: 700;
+  min-width: 82px;
+  flex-shrink: 0;
+}
+
+.mq-cta {
+  display: block;
+  background: #1B3A2F;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 16px 22px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 14px;
+  transition: opacity 0.2s ease, transform 0.12s ease;
+  line-height: 1.35;
+}
+
+.mq-cta:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.mq-retake {
+  background: none;
+  border: none;
+  color: #9EB8AC;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 4px 0;
+  text-decoration: underline;
+  font-family: inherit;
+  transition: color 0.15s ease;
+}
+
+.mq-retake:hover { color: #1B3A2F; }
+
+.mq-divider {
+  height: 1px;
+  background: #E4EDE8;
+  margin: 0 0 16px;
+}
+
+@keyframes mq-fadein {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mq-anim {
+  animation: mq-fadein 0.32s ease both;
+}
+
+@media (max-width: 400px) {
+  .mq-card { padding: 28px 20px; }
+  .mq-title { font-size: 19px; }
+  .mq-question { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<div class="mq-shell">
+  <div class="mq-card" id="mqCard"></div>
+</div>
+
+<script>
+(function () {
+
+  var QUESTIONS = [
+    {
+      text: "When you think about your ideal concentrate, what matters most?",
+      options: [
+        { label: "The raw, unfiltered character straight off the press", val: "fp" },
+        { label: "Consistent, creamy, scoopable — every single time", val: "cc" },
+        { label: "Visible crystals, layers, and depth — the full picture", val: "jam" }
+      ]
+    },
+    {
+      text: "Your dab tool is ready. What's the ideal texture waiting for you?",
+      options: [
+        { label: "Sappy and sticky — I don't mind a little challenge", val: "fp" },
+        { label: "Smooth and opaque — clean lift, no fuss", val: "cc" },
+        { label: "Semi-liquid with visible layers — a little drama is good", val: "jam" }
+      ]
+    },
+    {
+      text: "How do you feel about waiting for the best possible result?",
+      options: [
+        { label: "Skip the wait. I want it fresh and immediate", val: "fp" },
+        { label: "A couple of weeks? Worth every day for that creamy finish", val: "cc" },
+        { label: "I'll wait as long as it takes for something truly special", val: "jam" }
+      ]
+    }
+  ];
+
+  var RESULTS = {
+    fp: {
+      icon: "✨",
+      badge: "Fresh Press",
+      badgeBg: "#B8D4C4",
+      badgeColor: "#1B3A2F",
+      factsBg: "#EFF6F1",
+      heading: "You're a purist.",
+      desc: "You want concentrate in its most immediate form — translucent, amber, and bursting with bright terpene character right off the press. Fresh press is for those who want the unfiltered experience without waiting for the cure.",
+      facts: [
+        { label: "Texture:", value: "Translucent, sappy" },
+        { label: "Cure time:", value: "None — immediate" },
+        { label: "Character:", value: "Bright, vibrant terpene expression" }
+      ],
+      ctaText: "Explore Mood's Dab Collection",
+      ctaHref: "https://mood.com/shop/product-category/concentrates/dab"
+    },
+    cc: {
+      icon: "🍃",
+      badge: "Cold Cure Badder",
+      badgeBg: "#EAC8C4",
+      badgeColor: "#6B2E2A",
+      factsBg: "#FDF0EF",
+      heading: "You appreciate the craft of patience.",
+      desc: "Cold cure's creamy, stable badder gives you consistent texture and a well-rounded terpene profile in one scoopable package. It's the format that made solventless concentrates a commercial staple — and it's easy to see why.",
+      facts: [
+        { label: "Texture:", value: "Opaque, creamy, scoopable" },
+        { label: "Cure time:", value: "1 to 2 weeks at 40 to 70°F" },
+        { label: "Character:", value: "Rounded, consistent terpene expression" }
+      ],
+      ctaText: "Shop Tropical Storm Dab Badder — 2g for $89",
+      ctaHref: "https://mood.com/product/thca-tropical-storm-dab-badder"
+    },
+    jam: {
+      icon: "💜",
+      badge: "Rosin Jam",
+      badgeBg: "#C8BEE0",
+      badgeColor: "#3A2E5A",
+      factsBg: "#F3F0F9",
+      heading: "You're drawn to complexity.",
+      desc: "Rosin jam's semi-liquid texture and visible THCa crystals suspended in a terpene-rich layer are made for someone who appreciates every detail of the concentrate craft. You don't just want the result — you want the full picture.",
+      facts: [
+        { label: "Texture:", value: "Semi-liquid with visible crystal layers" },
+        { label: "How it's made:", value: "Cold cure badder with a secondary warm cure step" },
+        { label: "Character:", value: "Layered, complex, and visually striking" }
+      ],
+      ctaText: "Explore Mood's Dab Collection",
+      ctaHref: "https://mood.com/shop/product-category/concentrates/dab"
+    }
+  };
+
+  var state = { step: 0, answers: [] };
+  var card = document.getElementById('mqCard');
+
+  function render() {
+    card.className = 'mq-card mq-anim';
+    if (state.step === 0) {
+      renderIntro();
+    } else if (state.step <= QUESTIONS.length) {
+      renderQuestion(state.step - 1);
+    } else {
+      renderResult(tally(state.answers));
+    }
+  }
+
+  function el(tag, attrs, inner) {
+    var a = Object.keys(attrs || {}).map(function (k) {
+      return k + '="' + attrs[k] + '"';
+    }).join(' ');
+    return '<' + tag + (a ? ' ' + a : '') + '>' + (inner || '') + '</' + tag + '>';
+  }
+
+  function renderIntro() {
+    card.innerHTML = [
+      el('p', { class: 'mq-eyebrow' }, 'Mood &nbsp;&middot;&nbsp; Concentrate Guide'),
+      el('div', { class: 'mq-icon' }, '🍃'),
+      el('h2', { class: 'mq-title' }, 'Which Concentrate Style Is Right For You?'),
+      el('p', { class: 'mq-sub' }, '3 quick questions. Find your perfect match.'),
+      el('button', { class: 'mq-start-btn', id: 'mqStart' }, 'Find My Concentrate Style &rarr;')
+    ].join('');
+
+    document.getElementById('mqStart').onclick = function () {
+      state.step = 1;
+      render();
+    };
+  }
+
+  function renderQuestion(i) {
+    var q = QUESTIONS[i];
+    var pct = Math.round((i / QUESTIONS.length) * 100);
+
+    var opts = q.options.map(function (o, idx) {
+      return el('button', { class: 'mq-opt', 'data-val': o.val, 'data-idx': idx }, o.label);
+    }).join('');
+
+    card.innerHTML = [
+      el('p', { class: 'mq-eyebrow' }, 'Mood &nbsp;&middot;&nbsp; Concentrate Guide'),
+      el('p', { class: 'mq-progress-label' }, 'Question ' + (i + 1) + ' of ' + QUESTIONS.length),
+      el('div', { class: 'mq-progress-track' },
+        el('div', { class: 'mq-progress-fill', id: 'mqBar', style: 'width:' + pct + '%' }, '')
+      ),
+      el('p', { class: 'mq-question' }, q.text),
+      el('div', { class: 'mq-options' }, opts)
+    ].join('');
+
+    setTimeout(function () {
+      var bar = document.getElementById('mqBar');
+      if (bar) bar.style.width = Math.round(((i + 1) / QUESTIONS.length) * 100) + '%';
+    }, 60);
+
+    card.querySelectorAll('.mq-opt').forEach(function (btn) {
+      btn.onclick = function () {
+        if (btn.classList.contains('mq-selected')) return;
+        card.querySelectorAll('.mq-opt').forEach(function (b) { b.onclick = null; });
+        btn.classList.add('mq-selected');
+        state.answers.push(btn.getAttribute('data-val'));
+        setTimeout(function () {
+          state.step++;
+          render();
+        }, 300);
+      };
+    });
+  }
+
+  function renderResult(key) {
+    var r = RESULTS[key];
+
+    var facts = r.facts.map(function (f) {
+      return el('div', { class: 'mq-fact-row' },
+        el('span', { class: 'mq-fact-label' }, f.label) +
+        el('span', {}, f.value)
+      );
+    }).join('');
+
+    card.innerHTML = [
+      el('div', { style: 'text-align:center;' },
+        el('p', { class: 'mq-eyebrow' }, 'Your Result'),
+        el('div', { style: 'font-size:40px; line-height:1; margin-bottom:14px;' }, r.icon),
+        el('span', {
+          class: 'mq-result-badge',
+          style: 'background:' + r.badgeBg + '; color:' + r.badgeColor + ';'
+        }, r.badge),
+        el('h3', { class: 'mq-result-heading' }, r.heading)
+      ),
+      el('p', { class: 'mq-result-desc' }, r.desc),
+      el('div', { class: 'mq-result-facts', style: 'background:' + r.factsBg + ';' }, facts),
+      el('div', { class: 'mq-divider' }, ''),
+      el('a', { class: 'mq-cta', href: r.ctaHref, target: '_blank', rel: 'noopener' }, r.ctaText),
+      el('button', { class: 'mq-retake', id: 'mqRetake' }, 'Retake the quiz')
+    ].join('');
+
+    document.getElementById('mqRetake').onclick = function () {
+      state.step = 0;
+      state.answers = [];
+      render();
+    };
+  }
+
+  function tally(answers) {
+    var counts = { fp: 0, cc: 0, jam: 0 };
+    answers.forEach(function (a) { if (counts[a] !== undefined) counts[a]++; });
+    var winner = 'cc', best = -1;
+    Object.keys(counts).forEach(function (k) {
+      if (counts[k] > best) { best = counts[k]; winner = k; }
+    });
+    return winner;
+  }
+
+  render();
+
+}());
+</script>
+
+</body>
+</html>
